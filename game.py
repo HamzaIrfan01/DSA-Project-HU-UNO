@@ -6,6 +6,8 @@ from colorama import init, Fore, Back
 init(autoreset=True)
 pygame.init()
 
+
+# The turn function executes every players turn
 def turn(UnoDeck, Deck, pNames):
    win = False
    skip = False
@@ -13,6 +15,7 @@ def turn(UnoDeck, Deck, pNames):
    draw4 = False
    top_deck = draw_one_card(UnoDeck)
    
+   # Checks if any cards are left or not
    while win == False:
       for x in Deck:
          if skip == True:
@@ -58,7 +61,7 @@ def turn(UnoDeck, Deck, pNames):
             win = True
             break
 
-         
+# function used for selecting the color
 def select_color():
    while 1 == 1:
       print("\nWILD CARD: \nSelect A Color:")
@@ -81,7 +84,7 @@ def select_color():
                return 'Yellow'
    
 
-
+# Checks if the top card and played card have the same color or the same number
 def valid(top_deck, play_card):
    if top_deck[0] == play_card[0] or top_deck[1] == play_card[1]:
       return True
@@ -89,12 +92,17 @@ def valid(top_deck, play_card):
       return True
    return False
 
+
+# This function is used to take input from the user, for e.g. to ask for which card he wants to play
 def take_input(top_deck, deck, player, pNames):
    while 1 == 1:
       # print(chr(27) + "[2J")
       # print(player+1)
       print(pNames[player],": It's your turn")
 
+
+      # All of these extra conditions are to check which color the card is so it should be 
+      # shown in that particular color using the "Fore.color" statement
       print("Top Card: ",end="")
       if top_deck[0]=="Yellow":
          tmp = ""+str(top_deck)
@@ -142,6 +150,8 @@ def take_input(top_deck, deck, player, pNames):
             if (valid(top_deck, deck[temp])) == True:
                return deck[temp]
 
+
+# It is used at the start of the game
 def buildDeck():
    deck = []
    colors = ['Red','Green','Yellow','Blue']
@@ -160,17 +170,19 @@ def buildDeck():
 
    return deck
 
-
+# This function is used to shuffle the deck (self-explanitory)
 def shuffleDeck(deck):
    for cardPos in range(len(deck)):
       randPos = random.randint(0,107)
       deck[cardPos],deck[randPos] = deck[randPos],deck[cardPos]
    return deck 
 
-
+# When the player hits pass of gets draw two or draw four this function is called
 def draw_one_card(deck):
    return deck.pop()
 
+
+# This function distributes 7 cards to each player from the deck
 def distribute_deck(game_deck):
    p1Cards=[]
    p2Cards=[]
@@ -179,6 +191,8 @@ def distribute_deck(game_deck):
       p2Cards.append(game_deck.pop())
    return [p1Cards,p2Cards]
 
+
+# This function displays the welcome text and takes the name of the players
 def welcomer():
    mixer.music.load("Good_Starts.mp3")
    mixer.music.play(-1)
